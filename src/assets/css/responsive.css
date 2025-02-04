@@ -1,0 +1,91 @@
+
+.hero-text {
+    margin-bottom: 100px;
+    grid-area: hero-text;
+}
+
+.hero-photo {
+    grid-area: hero-photo;
+    align-self: end;
+}
+
+.hero-bottom {
+    grid-area: hero-bottom;
+    /*background: url('/assets/images/graphicsEnd.png') repeat-x;*/
+    width: 100%;
+    position: relative;
+    top: -150px;
+    height: 226px;
+
+}
+
+.hero .hello {
+    font-size: x-large;
+    color: white;
+}
+
+.cover-decoration-bottom img {
+    max-width: 100%;
+}
+
+
+@media screen and (  max-width: 500px ) {
+
+    .hero-text {
+        margin-left: 5vw;
+        margin-right: 5vw;
+    }
+    .hero {
+        display: grid;
+        grid-template-areas:
+                "hero-text "
+                "hero-photo "
+                "hero-bottom";
+        grid-template-columns:  auto;
+        grid-template-rows: auto auto 76px;
+
+
+    }
+
+}
+
+
+@media screen and (min-width: 500px ) {
+
+    .hero-text {
+
+        margin-right: 5vw;
+    }
+
+    .hero {
+        display: grid;
+        grid-template-areas:
+                "hero-photo hero-text"
+                "hero-bottom hero-bottom";
+        grid-template-columns: 210px auto;
+        grid-template-rows: auto 76px;
+    }
+}
+
+
+.cover .caption h1 {
+    /*font-size: 5vh;*/
+}
+
+.controls-episode li.control-ep {
+    margin: 0 5px;
+}
+
+footer.footer .copyrights {
+    line-height: 1.6em;
+}
+
+
+.contact-area {
+    margin-bottom: 50px;
+}
+
+#contact-section .heading-contact {
+    margin-left: 0;
+}
+
