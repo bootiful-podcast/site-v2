@@ -50,15 +50,15 @@ jobs:
           export PATH="$PATH:/usr/local/bin"
           ytt version
       
-      #      - name: Publish Container
-      #        run: |
-      #          export PATH=$GITHUB_WORKSPACE/bin/:$PATH
-      #          mkdir -p $GITHUB_WORKSPACE/bin/
-      #          (curl -sSL "https://github.com/buildpacks/pack/releases/download/v0.29.0/pack-v0.29.0-linux.tgz" | sudo tar -C  $GITHUB_WORKSPACE/bin/ --no-same-owner -xzv pack)
-      #          export APP_NAME=bootiful-podcast-site
-      #          export IMAGE_NAME="us-docker.pkg.dev/${GCLOUD_PROJECT}/bootiful-podcast-artifact-registry/${APP_NAME}:latest"
-      #          export ROOT_DIR=$GITHUB_WORKSPACE 
-      #          $ROOT_DIR/.github/workflows/build_container.sh
+      - name: Publish Container
+        run: |
+          export PATH=$GITHUB_WORKSPACE/bin/:$PATH
+          mkdir -p $GITHUB_WORKSPACE/bin/
+          (curl -sSL "https://github.com/buildpacks/pack/releases/download/v0.29.0/pack-v0.29.0-linux.tgz" | sudo tar -C  $GITHUB_WORKSPACE/bin/ --no-same-owner -xzv pack)
+          export APP_NAME=bootiful-podcast-client
+          export IMAGE_NAME="us-docker.pkg.dev/${GCLOUD_PROJECT}/bootiful-podcast-artifact-registry/${APP_NAME}:latest"
+          export ROOT_DIR=$GITHUB_WORKSPACE 
+          $ROOT_DIR/.github/workflows/build_container.sh
 
 
 

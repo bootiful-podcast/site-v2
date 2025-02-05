@@ -2,7 +2,7 @@
 
 ---
 service: bootiful-podcast-client
-container: us-docker.pkg.dev/joshlong/mogul-artifact-registry/bootiful-podcast-site:latest
+container: us-docker.pkg.dev/joshlong/bootiful-podcast-artifact-registry/bootiful-podcast-client:latest
 url: bootifulpodcast.fm
 port: 8080
 

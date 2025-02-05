@@ -112,15 +112,15 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: #@ data.values.service  + '-ingress'
+  
   annotations:
+  
     nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
-
     ingress.kubernetes.io/force-ssl-redirect: "true"
-
     kubernetes.io/ingress.global-static-ip-name: #@  'bootiful-podcast-' + data.values.service +'-ip'
     networking.gke.io/managed-certificates: #@  data.values.service +'-certificate'
-
+    
 spec:
 
   rules:
