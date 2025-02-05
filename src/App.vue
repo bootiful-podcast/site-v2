@@ -6,28 +6,48 @@
 @import url("assets/css/framework.css");
 @import url("assets/css/responsive.css");
 @import url("assets/css/main.css");
+
+.footer-text {
+  display: grid;
+ 
+  grid-template-rows: auto auto;
+  grid-template-columns: auto 60em auto;
+  grid-template-areas: 
+          " . copyright . "
+          " . arrow . "
+}
+
+.arrow {
+  grid-area: arrow;
+  text-align: center  ;
+}
+
+.copyright {
+  grid-area: copyright;
+  text-align: center  ;
+}
 </style>
 <template>
   <div>
     <a id="top"></a>
 
     <header class="top-bar" id="topBar">
-<!--      <div class="audio-title-container">
-        <div v-if="selected != null" class="col-md-12 align-content-center">
-          {{ selected.title }}
-        </div>
-      </div>
-
-      <div class="audio-image-container">
-        <img v-if="selected != null" :src="selected.episodePhotoUri"/>
-      </div>
-
-      <div class="audio-audio-container">
-        <audio class="audio-player" :src="selectedEpisodeUri" controls>
-          Your browser does not support the HTML5 <code>audio</code> element and
-          so can't play the recent episodes.
-        </audio>
-      </div>-->
+      <!--      <div class="audio-title-container">
+              <div v-if="selected != null" class="col-md-12 align-content-center">
+                {{ selected.title }}
+              </div>
+            </div>
+      
+            <div class="audio-image-container">
+              <img v-if="selected != null" :src="selected.episodePhotoUri"/>
+            </div>
+      
+            <div class="audio-audio-container">
+              <audio class="audio-player" :src="selectedEpisodeUri" controls>
+                Your browser does not support the HTML5 <code>audio</code> element and
+                so can't play the recent episodes.
+              </audio>
+            </div>-->
 
       <div class="menu-bar-container">
         <div
@@ -51,20 +71,32 @@
             id="mobile-menu"
         >
           <ul class="navbar-nav mr-auto">
+
+
             <li class="nav-item">
               <a
                   class="nav-link"
                   target="_blank"
-                  href="http://twitter.com/starbuxman"
-              >Twitter (@starbuxman)</a
+                  href="https://youtube.com/@coffeesoftware"
+              >Youtube @coffeesoftware</a
+              >
+            </li>
+
+
+            <li class="nav-item">
+              <a
+                  class="nav-link"
+                  target="_blank"
+                  href="https://bsky.app/profile/starbuxman.joshlong.com"
+              >Bluesky @starbuxman.joshlong.com</a
               >
             </li>
             <li class="nav-item">
               <a
                   class="nav-link"
                   target="_blank"
-                  href="http://twitter.com/BootifulPodcast"
-              >Twitter (@BootifulPodcast)</a
+                  href="http://twitter.com/starbuxman"
+              >Twitter (@starbuxman)</a
               >
             </li>
             <li class="nav-item">
@@ -98,11 +130,11 @@
             <li><a href="#latest-podcasts">Latest Episodes</a></li>
             <li><a href="#all-podcasts">All Episodes</a></li>
             <li><a href="#podcatchers">iTunes/Google Play/Spotify</a></li>
-            <li>
-              <a href="https://www.patreon.com/joshlong"
-              >Support Us On Patreon
-              </a>
-            </li>
+            <!--            <li>
+                          <a href="https://www.patreon.com/joshlong"
+                          >Support Us On Patreon
+                          </a>
+                        </li>-->
           </ul>
           <div class="search-nav"></div>
         </div>
@@ -141,7 +173,7 @@
     <section class="section" id="podcasts-archive">
       <div class="heading-section">
         <h5>All Episodes</h5>
-        <a name="all-podcasts"></a>
+        <a id="all-podcasts"></a>
       </div>
       <div class="container-fluid">
         <div class="row justify-content-center">
@@ -202,68 +234,63 @@
           </p>
         </div>
         <div class="row justify-content-center">
-           
+
           <table>
             <tr>
               <td>
                 <a
-                  href="https://podcasts.apple.com/us/podcast/a-bootiful-podcast/id1438691771?mt=2"
+                    href="https://podcasts.apple.com/us/podcast/a-bootiful-podcast/id1438691771?mt=2"
                 >
                   <img
-                    src="/assets/images/podcast-apps/itunes.png"
-                    alt="iTunes and Apple Podcasts"
-                    class="podcast-app-image"
+                      src="/assets/images/podcast-apps/itunes.png"
+                      alt="iTunes and Apple Podcasts"
+                      class="podcast-app-image"
                   />
                 </a>
               </td>
 
               <td>
                 <a
-                  href="https://play.google.com/music/listen?u=0#/ps/I5qmmensglu6q5iwourdl2a2hcm"
+                    href="https://play.google.com/music/listen?u=0#/ps/I5qmmensglu6q5iwourdl2a2hcm"
                 >
                   <img
-                    src="/assets/images/podcast-apps/google.png"
-                    alt="Google"
-                    class="podcast-app-image"
+                      src="/assets/images/podcast-apps/google.png"
+                      alt="Google"
+                      class="podcast-app-image"
                   />
                 </a>
               </td>
-
               <td>
                 <a
-                  href="https://open.spotify.com/show/5eyimRNrvZStATQk8by82A?si=iq0BzQVrSrO6XvARMiVSPg"
+                    href="https://open.spotify.com/show/5eyimRNrvZStATQk8by82A?si=iq0BzQVrSrO6XvARMiVSPg"
                 >
                   <img
-                    src="/assets/images/podcast-apps/spotify.png"
-                    alt="Spotify"
-                    class="podcast-app-image"
+                      src="/assets/images/podcast-apps/spotify.png"
+                      alt="Spotify"
+                      class="podcast-app-image"
                   />
                 </a>
               </td>
             </tr>
           </table>
-      
+
         </div>
       </div>
     </section>
     <footer class="footer">
-      <div class="container-fluid">
-        <div class="row justify-content-center">
-          <div class="col-md-4 col-sm-6">
-            <p class="copyrights">
-              All rights reserved for <em>A Bootiful Podcast</em>   <span v-text="yearsCopyright"></span>
-            </p>
-          </div>
-          <div class="col-md-4 col-hide">
-            <a href="#top" @click="scrollToTop" class="button-scroll-top">
-              <img
-                  src="/assets/images/scrollTop.png"
-                  alt="Scroll to the top of the page"
-              />
-            </a>
-          </div>
-        </div>
-      </div>
+     <div class="footer-text">
+       <div class="copyright">
+         All rights reserved for <em>A Bootiful Podcast</em> <span v-text="yearsCopyright"></span>
+       </div>
+       <div class="arrow">
+         <a href="#top" @click="scrollToTop" class="button-scroll-top ">
+           <img
+               src="/assets/images/scrollTop.png"
+               alt="Scroll to the top of the page"
+           />
+         </a>
+       </div>
+     </div>
     </footer>
   </div>
 </template>
@@ -282,7 +309,7 @@ export default {
     this.currentYear = cy;
     this.selectedYear = cy;
 
-    function calculateYears(ps) {
+    function calculateYears(episodesArray) {
       const start = 2018;
       const years = [];
       let ny = start;
@@ -293,8 +320,8 @@ export default {
       return years.map((year) => {
         return {
           year: year,
-          episodes: ps.filter(
-              (p) => parseInt(p.dateAndTime.split("/")[2]) === year
+          episodes: episodesArray.filter(
+              (singleEpisode) => parseInt(singleEpisode.dateAndTime.split("-")[0]) === year
           ),
         };
       });
@@ -341,9 +368,9 @@ export default {
     },
 
     calculateUrlForPodcast(podcast) {
-      const url =  podcast["episodeUri"] 
-          // this.$store.rootUrl +
-          // podcast["episodeUri"].substring(1, podcast.episodeUri.length);
+      const url = podcast["episodeUri"]
+      // this.$store.rootUrl +
+      // podcast["episodeUri"].substring(1, podcast.episodeUri.length);
       console.log("the url is ", url);
       return url;
     },

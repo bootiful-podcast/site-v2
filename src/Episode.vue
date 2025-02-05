@@ -24,12 +24,12 @@
 
   .podcast-episode {
     grid-template-areas:
-      "photo photo"
-      "title title "
-      "controls dateline"
-      "description description"
-      "share share";
-    grid-template-columns: 30px auto;
+      "photo"
+      "title "
+      "dateline"
+      "description"
+      "share";
+    grid-template-columns:   auto;
     grid-template-rows: auto auto auto auto auto;
   }
 }
@@ -42,11 +42,11 @@
 
   .podcast-episode {
     grid-template-areas:
-      "photo title title "
-      "photo controls dateline "
-      "photo description description"
-      ". share share";
-    grid-template-columns: 200px 30px auto;
+      "photo title   "
+      "photo dateline   "
+      "photo description  "
+      ".  share";
+    grid-template-columns: 200px   auto;
     grid-template-rows: auto auto auto auto;
   }
 }
@@ -80,12 +80,16 @@
     </div>
 
     <h4 class="title">
-      <router-link
+      <a :href="episode.url">
+        {{episode.title}}   
+      </a>
+      
+<!--      <router-link
         class="active"
         :to="{ name: 'episodes', params: { uid: episode.uid } }"
       >
         {{ episode.title }}
-      </router-link>
+      </router-link>-->
     </h4>
 
     <div class="dateline">{{ episode.dateAndTime }}</div>
@@ -105,9 +109,9 @@
         </div>
       </PopupPanel>
     </div>
-
+<!--
     <div class="controls">
-      <ul>
+&lt;!&ndash;      <ul>
         <li class="control-ep">
           <div class="icon">
             <i
@@ -126,8 +130,8 @@
             id="'episode-play-' + episode.uid +'-status' "
           ></span>
         </li>
-      </ul>
-    </div>
+      </ul>&ndash;&gt;
+    </div>-->
   </div>
 </template>
 <script>

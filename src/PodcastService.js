@@ -70,7 +70,6 @@ export default class PodcastService {
                             label: cat.getAttribute('label')
                         }))
                     };
-                    console.log('got an ATOM element:' , podcast)
                     return podcast;
 
                 })

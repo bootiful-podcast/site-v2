@@ -20,10 +20,8 @@ export default class PlayerService {
   async play(podcast) {
     // this.selected = podcast
     const element = this.getAudioElement();
-    console.log(element);
     console.assert(podcast != null);
     console.assert(element != null);
-    console.log("going to play ## " + podcast.uid);
     try {
       await element.pause();
     } catch (e) {
