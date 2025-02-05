@@ -12,7 +12,7 @@
     <a id="top"></a>
 
     <header class="top-bar" id="topBar">
-      <div class="audio-title-container">
+<!--      <div class="audio-title-container">
         <div v-if="selected != null" class="col-md-12 align-content-center">
           {{ selected.title }}
         </div>
@@ -27,7 +27,7 @@
           Your browser does not support the HTML5 <code>audio</code> element and
           so can't play the recent episodes.
         </audio>
-      </div>
+      </div>-->
 
       <div class="menu-bar-container">
         <div
@@ -202,7 +202,7 @@
           </p>
         </div>
         <div class="row justify-content-center">
-          <!-- todo restore this !! i just removed this on 2-4-2025! fix it!
+           
           <table>
             <tr>
               <td>
@@ -242,7 +242,7 @@
               </td>
             </tr>
           </table>
-          -->
+      
         </div>
       </div>
     </section>
@@ -251,7 +251,7 @@
         <div class="row justify-content-center">
           <div class="col-md-4 col-sm-6">
             <p class="copyrights">
-              All rights reserved for <em>A Bootiful Podcast</em> 2018-2025
+              All rights reserved for <em>A Bootiful Podcast</em>   <span v-text="yearsCopyright"></span>
             </p>
           </div>
           <div class="col-md-4 col-hide">
@@ -304,7 +304,7 @@ export default {
     this.latest = await this.$store.podcastService.readLatest();
     this.top3 = await this.$store.podcastService.readTop3();
     this.years = calculateYears(this.podcasts);
-    const ps = this.$store.playerService;
+    // const ps = this.$store.playerService;
     // const that = this;
     /*  todo refactor this to use mitt
    this.$on("play", async (episode) => {
@@ -320,13 +320,13 @@ export default {
     });
     */
     // this way we synchronize player state to the HTML5 controls, not just our custom ones
-    const player = this.$store.playerService.getAudioElement();
+    /*const player = this.$store.playerService.getAudioElement();
     player.addEventListener("pause", () => {
       ps.playing = false;
     });
     player.addEventListener("playing", () => {
       ps.playing = true;
-    });
+    });*/
   },
 
   methods: {
@@ -341,9 +341,9 @@ export default {
     },
 
     calculateUrlForPodcast(podcast) {
-      const url =
-          this.$store.rootUrl +
-          podcast["episodeUri"].substring(1, podcast.episodeUri.length);
+      const url =  podcast["episodeUri"] 
+          // this.$store.rootUrl +
+          // podcast["episodeUri"].substring(1, podcast.episodeUri.length);
       console.log("the url is ", url);
       return url;
     },
@@ -382,6 +382,7 @@ export default {
       selected: null,
       top3: [],
       podcasts: [],
+      yearsCopyright: '2018 - ' + new Date().getFullYear(),
     };
   },
 

@@ -27,7 +27,8 @@ export default {
   props: ["id"],
   name: "EpisodePage",
 
-  async mounted() {},
+  async mounted() {}, 
+  
   async created() {
     const uid = this.$route.params.uid;
     this.episode = await this.$store.podcastService.readPodcastByUid(uid);
@@ -39,7 +40,7 @@ export default {
     this.$root.siteService.configureMetadata({
       title: this.episode.title,
       description: this.episode.title,
-      image: this.episode.episodePhotoUri,
+      image: this.episode.image ,
       url: this.$store.siteService.getUrlForEpisode(this.episode),
     });
   },
