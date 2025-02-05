@@ -43,4 +43,4 @@ jobs:
           export APP_NAME=bootiful-podcast-site
           export IMAGE_NAME="us-docker.pkg.dev/${GCLOUD_PROJECT}/mogul-artifact-registry/${APP_NAME}:latest"
           export ROOT_DIR=$GITHUB_WORKSPACE 
-          $ROOT_DIR/.github/workflows/build-container.sh
+          $ROOT_DIR/.github/workflows/build_container.sh
