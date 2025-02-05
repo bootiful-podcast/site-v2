@@ -1,5 +1,7 @@
-// import requestUtils from "@/RequestUtils";
+
+
 export default class SiteService {
+  
   constructor() {
     this.title = "A BootifulPodcast.fm with Josh Long ";
     this.installTitle(this.title);
@@ -10,8 +12,7 @@ export default class SiteService {
   }
 
   getUrlForEpisode(episode) {
-    const prefix = "https://bootifulpodcast.fm"; // todo make this dynamic so it works on localhost:8080 OR in prod
-    return prefix + "/#/episodes/" + episode.uid;
+    return episode.url
   }
 
   configureMetadata(tags) {

@@ -45,35 +45,33 @@ export default class PodcastService {
             try {
                 const parser = new DOMParser()
                 const xmlDoc = parser.parseFromString(textData, 'text/xml')
-
                 const entries = xmlDoc.querySelectorAll('entry')
-
-                // Convert to array of objects
-                return Array.from(entries).map(entry => {
-                    const links = Array.from(
-                        entry.querySelectorAll('link'))
-
+                return Array
+                    .from(entries)
+                    .map(entry => {
+                    const links = Array.from(entry.querySelectorAll('link'))
                     const image = links.filter(link => link.getAttribute('type') === 'image/jpeg')[0]
                     const podbean = links.filter(link => {
                         const attribute = link.getAttribute('type');
                         return attribute === null || attribute === undefined;
                     }) [0]
-                    return {
-                        image: image?.getAttribute('href'),
+                    const podcast =  {
+                        image : image?.getAttribute('href'),
                         title: entry.querySelector('title')?.textContent,
                         episode: podbean?.getAttribute('href'), // ATOM uses href attribute
                         id: entry.querySelector('id')?.textContent,
-                        updated: entry.querySelector('updated')?.textContent,
+                        dateAndTime: entry.querySelector('updated')?.textContent,
                         summary: entry.querySelector('summary')?.textContent,
                         content: entry.querySelector('content')?.textContent,
                         author: entry.querySelector('author > name')?.textContent,
-                        // Additional ATOM-specific fields
                         published: entry.querySelector('published')?.textContent,
                         category: Array.from(entry.querySelectorAll('category')).map(cat => ({
                             term: cat.getAttribute('term'),
                             label: cat.getAttribute('label')
                         }))
                     };
+                    console.log('got an ATOM element:' , podcast)
+                    return podcast;
 
                 })
             } catch (error) {
@@ -89,26 +87,29 @@ export default class PodcastService {
                 const response = await fetch(proxyUrl)
                 const textData = await response.text()
                 return parseAtomFeed(textData)
-            } catch (error) {
+            }//   
+            catch (error) {
                 console.error('Error fetching RSS:', error)
                 throw error
             }
         }
 
         const rss = await fetchRSS("https://api.media-mogul.io/public/feeds/moguls/16386/podcasts/1/episodes.atom")
-        this.podcasts = rss.map(podcast => {
-            return {
-                id: podcast.id,
-                uid: podcast.episode,
-                title: podcast.title,
-                image: podcast.image,
-                date: new Date(podcast.updated),
-                summary: podcast.summary,
-                content: podcast.content, 
-                dateAndTime: podcast.updated,
-                author: podcast.author,
-            }
-        });
+        this.podcasts = rss
+            .map(podcast => {
+                return {
+                    id: podcast.id,
+                    uid: podcast.episode,
+                    title: podcast.title,
+                    image: podcast.image,
+                    date: new Date(podcast.dateAndTime),
+                    description : podcast.summary,
+                    content: podcast.content, 
+                    url: podcast.episode,
+                    dateAndTime: podcast.dateAndTime,
+                    author: podcast.author,
+                }
+            });
 
 
         this.podcasts.sort((a, b) => {

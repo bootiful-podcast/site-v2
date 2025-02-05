@@ -76,7 +76,7 @@
 <template>
   <div class="podcast-episode">
     <div class="photo" id="'delayed-image-' + episode.uid ">
-      <img :alt="'photo for ' + episode.uid" :src="episode.episodePhotoUri" />
+      <img :alt="'photo for ' + episode.uid" :src="episode.image" />
     </div>
 
     <h4 class="title">
@@ -98,7 +98,7 @@
         <div>
           <SharePanel
             :title="episode.title"
-            :image-url="episode.episodePhotoUri"
+            :image-url="episode.image"
             :post-url="getUrlForEpisode(episode)"
             :episode="episode"
           />
