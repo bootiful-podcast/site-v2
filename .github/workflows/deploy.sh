@@ -48,7 +48,9 @@ kubectl get ns $NAMESPACE_NAME || kubectl create namespace $NAMESPACE_NAME
 write_secrets
 
 echo "the root dir is: $ROOT_DIR "
-cd $ROOT_DIR/k8s/carvel/
+cd $ROOT_DIR/.github/workflows/bin/k8s/carvel/
+echo "the carvel directory is `pwd` " 
+
 
 get_image(){
   kubectl get "$1" -o json  | jq -r  ".spec.template.spec.containers[0].image" || echo "no old version to compare against"
@@ -70,7 +72,7 @@ for f in bootiful-podcast-client ; do
   OUT_YML=out.yml
   ytt -f $Y -f "$ROOT_DIR"/k8s/carvel/data-schema.yml -f "$ROOT_DIR"/k8s/carvel/deployment.yml |  kbld -f -  > ${OUT_YML}
   cat ${OUT_YML}
-  cat ${OUT_YML} | kubectl apply  -n $NAMESPACE_NAME -f -
+  cat ${OUT_YML} | kubectl apply -n $NAMESPACE_NAME -f -
   NEW_IMAGE=`get_image $D`
   echo "comparing container images for the first container!"
   echo $OLD_IMAGE
