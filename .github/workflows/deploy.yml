@@ -19,15 +19,7 @@ jobs:
           P="${GITHUB_WORKSPACE}/bin"
           mkdir -p $P
           echo "${P}" >> $GITHUB_PATH
-
-      - uses: 'google-github-actions/auth@v2'
-        with:
-          credentials_json: '${{ secrets.GCLOUD_SA_KEY }}'
-
-      - run: |
-          gcloud config set project $GCLOUD_PROJECT
-          gcloud --quiet auth configure-docker us-docker.pkg.dev
-
+          
       - uses: actions/setup-node@v4
         with:
           node-version: '21.x'
@@ -41,6 +33,31 @@ jobs:
 #          export IMAGE_NAME="us-docker.pkg.dev/${GCLOUD_PROJECT}/bootiful-podcast-artifact-registry/${APP_NAME}:latest"
 #          export ROOT_DIR=$GITHUB_WORKSPACE 
 #          $ROOT_DIR/.github/workflows/build_container.sh
+
+
+      - uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: '${{ secrets.GCLOUD_SA_KEY }}'
+
+      - id: 'get-credentials'
+        uses: 'google-github-actions/get-gke-credentials@v2'
+        with:
+          cluster_name: '${{ env.GKE_CLUSTER  }}'
+          location: '${{ env.GCLOUD_ZONE }}'
+
+      - run: |
+          gcloud config set project $GCLOUD_PROJECT 
+          gcloud --quiet auth configure-docker
+          gcloud auth configure-docker us-docker.pkg.dev --quiet
+          kubectl get pods
+
+      - name: Set up Carvel Tools
+        run: |
+          curl -L https://carvel.dev/install.sh | bash
+          export PATH="$PATH:/usr/local/bin"
+          ytt version
+
+      
 
       - name: Deploy
         run: |
