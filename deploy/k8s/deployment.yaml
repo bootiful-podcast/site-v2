@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  labels:
+    app: site
+  name: site
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app:  site
+  template:
+    metadata:
+      labels:
+        app: site
+    spec:
+      containers:
+        - image: gcr.io/joshlong/site
+          imagePullPolicy: Always
+          name:  site
+          env:
+            - name: PORT
+              value: "8080"

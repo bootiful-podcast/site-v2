@@ -1,0 +1,14 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    ingress.kubernetes.io/force-ssl-redirect: "true"
+    networking.gke.io/managed-certificates: "site-certificate"
+    kubernetes.io/ingress.global-static-ip-name: "bootiful-podcast-site-ip"
+  name: site-ingress
+spec:
+  defaultBackend:
+    service:
+      name: site
+      port:
+        number: 80

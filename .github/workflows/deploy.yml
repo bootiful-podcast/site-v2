@@ -1,0 +1,46 @@
+name: Deploy
+
+env:
+
+  GCLOUD_SA_KEY: ${{ secrets.GCLOUD_SA_KEY }}
+  GCLOUD_PROJECT: joshlong
+  
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    name: Build Container
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: "Setup PATH"
+        run: |
+          P="${GITHUB_WORKSPACE}/bin"
+          mkdir -p $P
+          echo "${P}" >> $GITHUB_PATH
+
+      - uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: '${{ secrets.GCLOUD_SA_KEY }}'
+
+      - run: |
+          gcloud config set project $GCLOUD_PROJECT
+          gcloud --quiet auth configure-docker us-docker.pkg.dev
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '21.x'
+
+      - name: Publish Container
+        run: |
+          
+          export PATH=$GITHUB_WORKSPACE/bin/:$PATH
+          mkdir -p $GITHUB_WORKSPACE/bin/
+          (curl -sSL "https://github.com/buildpacks/pack/releases/download/v0.29.0/pack-v0.29.0-linux.tgz" | sudo tar -C  $GITHUB_WORKSPACE/bin/ --no-same-owner -xzv pack)
+          export APP_NAME=bootiful-podcast-site
+          export IMAGE_NAME="us-docker.pkg.dev/${GCLOUD_PROJECT}/mogul-artifact-registry/${APP_NAME}:latest"
+          export ROOT_DIR=$GITHUB_WORKSPACE 
+          $ROOT_DIR/.github/workflows/build-container.sh
