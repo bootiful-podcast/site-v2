@@ -1,0 +1,32 @@
+#@data/values-schema
+#@ load("@ytt:data", "data")
+---
+service: ""
+container: ""
+url: ""
+port: 8080
+resources:
+
+  limits:
+    cpu: "1000m"
+    memory: "2Gi"
+    ephemeral-storage: "10Gi"
+  
+  requests:
+    memory: "2Gi"
+    cpu: "1000m"
+    ephemeral-storage: "10Gi"
+
+probes:
+  readinessProbe:
+    initialDelaySeconds: 60
+    periodSeconds: 60
+    httpGet:
+      port: 8080
+      path: /actuator/health/readiness
+  livenessProbe:
+    initialDelaySeconds: 60
+    periodSeconds: 60
+    httpGet:
+      port: 8080
+      path: /actuator/health/liveness

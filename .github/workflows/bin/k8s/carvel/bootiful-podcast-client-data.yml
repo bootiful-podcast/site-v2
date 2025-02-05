@@ -1,0 +1,8 @@
+#@data/values
+
+---
+service: bootiful-podcast-client
+container: us-docker.pkg.dev/joshlong/mogul-artifact-registry/bootiful-podcast-site:latest
+url: bootifulpodcast.fm
+port: 8080
+

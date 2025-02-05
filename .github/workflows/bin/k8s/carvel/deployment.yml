@@ -1,0 +1,136 @@
+#@ load("@ytt:data", "data")
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: #@ str(data.values.service) + '-deployment'
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: #@ str(data.values.service)
+  template:
+    metadata:
+      labels:
+        app: #@ str(data.values.service)
+    spec:
+      containers:
+        - name: #@ data.values.service  + '-container'
+
+
+          image: #@ data.values.container
+          imagePullPolicy: Always
+
+          #@ if data.values.probes.livenessProbe :
+          livenessProbe: #@ data.values.probes.livenessProbe
+          #@ end
+
+          #@ if data.values.probes.readinessProbe :
+          readinessProbe: #@ data.values.probes.readinessProbe
+          #@ end
+
+          resources:
+            limits:
+              
+              #@ if data.values.resources.limits['ephemeral-storage'] :
+              ephemeral-storage: #@  data.values.resources.limits['ephemeral-storage']
+              #@ end
+              
+              #@ if data.values.resources.limits.cpu:
+              cpu : #@ data.values.resources.limits.cpu
+              #@ end
+
+              #@ if data.values.resources.limits.memory:
+              memory: #@ data.values.resources.limits.memory
+              #@ end
+            requests:
+              
+              #@ if data.values.resources.requests['ephemeral-storage'] :
+              ephemeral-storage: #@ data.values.resources.requests['ephemeral-storage']
+              #@ end
+              
+              
+              #@ if data.values.resources.requests.cpu:
+              cpu : #@ data.values.resources.requests.cpu
+              #@ end
+
+              #@ if data.values.resources.requests.memory:
+              memory: #@ data.values.resources.requests.memory
+              #@ end
+
+          ports:
+            - containerPort:  #@ data.values.port
+          envFrom:
+            - secretRef:
+                name: mogul-secrets
+          env:
+            - name: SERVER_PORT
+              value:  #@ str(data.values.port)
+            - name: LANG
+              value: "en_US.UTF-8"
+
+
+---
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: #@ data.values.service  + '-certificate'
+spec:
+  domains:
+    -  #@ str(data.values.url)
+
+
+---
+
+
+
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: #@ data.values.service  + '-backend-config'
+spec:
+  timeoutSec: 120
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    cloud.google.com/backend-config: #@ '{ "default" : "' + data.values.service  + '-backend-config"}'
+  name: #@ data.values.service  + '-service'
+spec:
+  type: NodePort
+  selector:
+    app: #@ data.values.service
+  ports:
+    - port:  #@ data.values.port
+      targetPort:  #@ data.values.port
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: #@ data.values.service  + '-ingress'
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+
+    ingress.kubernetes.io/force-ssl-redirect: "true"
+
+    kubernetes.io/ingress.global-static-ip-name: #@  'mogul-' + data.values.service +'-ip'
+    networking.gke.io/managed-certificates: #@  data.values.service +'-certificate'
+
+spec:
+
+  rules:
+    - host: #@ data.values.url
+      http:
+        paths:
+          - pathType: ImplementationSpecific
+            path: "/*"
+            backend:
+              service:
+                name:  #@ data.values.service + '-service'
+                port:
+                  number:  #@ data.values.port
