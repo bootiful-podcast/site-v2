@@ -62,7 +62,7 @@ spec:
             - containerPort:  #@ data.values.port
           envFrom:
             - secretRef:
-                name: mogul-secrets
+                name: bootiful-podcast-secrets
           env:
             - name: SERVER_PORT
               value:  #@ str(data.values.port)
@@ -118,7 +118,7 @@ metadata:
 
     ingress.kubernetes.io/force-ssl-redirect: "true"
 
-    kubernetes.io/ingress.global-static-ip-name: #@  'mogul-' + data.values.service +'-ip'
+    kubernetes.io/ingress.global-static-ip-name: #@  'bootiful-podcast-' + data.values.service +'-ip'
     networking.gke.io/managed-certificates: #@  data.values.service +'-certificate'
 
 spec:
