@@ -93,7 +93,7 @@ export default class PodcastService {
             }
         }
 
-        const rss = await fetchRSS("https://api.media-mogul.io/public/feeds/moguls/16386/podcasts/1/episodes.atom")
+        const rss = await fetchRSS("https://api.mogul.tools/public/feeds/moguls/16386/podcasts/1/episodes.atom")
         this.podcasts = rss
             .map(podcast => {
                 return {
