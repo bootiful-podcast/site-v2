@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-export APP_NAME=bootiful-podcast-site
-export GCLOUD_PROJECT=joshlong
-export IMAGE_NAME="us-docker.pkg.dev/${GCLOUD_PROJECT}/bootiful-podcast-artifact-registry/${APP_NAME}"
-export ROOT_DIR=`pwd`
-$ROOT_DIR/.github/workflows/build_container.sh
+# builds the container image the way the github actions workflow does, into the local docker
+# daemon instead of publishing it. run it with: docker run --rm -p 8080:8080 site
+set -euo pipefail
+export IMAGE_NAME=site
+export ROOT_DIR="$(cd "$(dirname "$0")" && pwd)"
+"$ROOT_DIR/.github/workflows/build-container.sh"
