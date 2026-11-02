@@ -3,5 +3,6 @@
 # daemon instead of publishing it. run it with: docker run --rm -p 8080:8080 site
 set -euo pipefail
 export IMAGE_NAME=site
-export ROOT_DIR="$(cd "$(dirname "$0")" && pwd)"
+ROOT_DIR="$(cd "$(dirname "$0")" && pwd)"
+export ROOT_DIR
 "$ROOT_DIR/.github/workflows/build-container.sh"
