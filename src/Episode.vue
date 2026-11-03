@@ -76,7 +76,7 @@
 <template>
   <div class="podcast-episode">
     <div class="photo" id="'delayed-image-' + episode.uid ">
-      <img :alt="'photo for ' + episode.uid" :src="episode.image" />
+      <img :alt="'photo for ' + episode.uid" :src="episode.image || defaultImage" @error="useDefaultImage" />
     </div>
 
     <h4 class="title">
@@ -160,10 +160,16 @@ export default {
     bubblePause(episode) {
       this.$emit("pause", episode);
     },
+    // a lot of the older episodes' artwork is gone from storage
+    useDefaultImage(event) {
+      if (!event.target.src.endsWith(this.defaultImage)) event.target.src = this.defaultImage;
+    },
   },
 
   data() {
-    return {};
+    return {
+      defaultImage: "/assets/images/a-bootiful-podcast-default-square.jpg",
+    };
   },
 
   components: { PopupPanel, SharePanel },
