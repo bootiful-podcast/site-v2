@@ -81,9 +81,9 @@ export default class PodcastService {
 
         const fetchRSS = async function (url) {
             try {
-                // If you run into CORS issues, you might need to use a proxy service
-                const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
-                const response = await fetch(proxyUrl)
+                // mogul serves its public feeds with CORS headers, so the browser can read them directly
+                const response = await fetch(url)
+                if (!response.ok) throw new Error(`the feed answered ${response.status}`)
                 const textData = await response.text()
                 return parseAtomFeed(textData)
             }//   
